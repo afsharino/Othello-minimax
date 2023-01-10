@@ -109,8 +109,31 @@ class Othello:
         return 1 if self.num_black > self.num_white else -1
     
     def is_cut_off(self, depth: int, depth_limit: int) -> bool:
-        pass
+        """Returns True if the search should be terminated at the current depth, False otherwise."""
+        if depth == depth_limit:
+            return True
+        if self.is_terminal():
+            return True
+        return False
     
     def heuristic(self) -> int:
-        pass
+        """estimates a state’s utility"""
+        black_tiles = self.num_black if self.current_player == 1 else self.num_white
+        white_tiles = self.num_white if self.current_player == 1 else self.num_black
+        black_corner, white_corner = (0,0)
+        for tile in [self.board[0][0], self.board[0][-1], self.board[-1][0], self.board[-1][-1]]:
+            if tile == 1:
+                black_corner += 1
+            elif tile == 2:
+                white_corner += 1
+            else:
+                continue
+
+        score = (black_tiles + 2 * black_corner) - (white_tiles - 2 * white_corner)
+        if score > 0:
+            return 1
+        elif score == 0:
+            return 0
+        else:
+            return -1
         
