@@ -23,6 +23,7 @@ class Othello:
         return list_of_actions
     
     def get_captured_tiles(self, row: int, col: int) -> list:
+        """get captured tiles in all 8 direction"""
         captured = []
         
         for row_offset, col_offset in [(0, 1), (0, -1), (1, 0), (-1, 0),
@@ -32,6 +33,7 @@ class Othello:
         return captured
     
     def get_captured_tiles_in_direction(self, row: int, col: int, row_offset: int, col_offset: int) -> list:
+        """get captured tiles in given direction"""
         captured = []
         
         row += row_offset
@@ -52,10 +54,11 @@ class Othello:
         return []
     
     def is_out_of_bound(self, row, col):
-        # Return False if the given position is on the board, True otherwise
+        """Return False if the given position is on the board, True otherwise"""
         return not (0 <= row < self.rows and 0 <= col < self.cols)
     
     def make_move(self, move:tuple) -> None:
+        """make move and update number of tiles for each player and flip tiles"""
         if type(move) == tuple:
             position, num_captured = move
             row, col = position
@@ -86,7 +89,18 @@ class Othello:
         return new_game
     
     def is_terminal(self) -> bool:
-        pass
+        """A terminal test, which is true when the game is over and false otherwise."""
+        if self.num_black + self.num_white == self.rows * self.cols:
+            return True
+        
+        elif not bool(self.actions()):
+            self.current_player = 2 if self.current_player == 1 else 1
+            if not bool(self.actions()):
+                return True
+            self.current_player = 2 if self.current_player == 1 else 1
+        
+        else:
+            return False
     
     def utility(self) -> int:
         pass
