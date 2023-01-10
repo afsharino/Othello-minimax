@@ -55,6 +55,26 @@ class Othello:
         # Return False if the given position is on the board, True otherwise
         return not (0 <= row < self.rows and 0 <= col < self.cols)
     
+    def make_move(self, move:tuple) -> None:
+        if type(move) == tuple:
+            position, num_captured = move
+            row, col = position
+            self.board[row][col] = self.current_player
+            if self.current_player == 1:
+                self.num_black += 1 + num_captured
+                self.num_white -= num_captured
+            else:
+                self.num_white += 1 + num_captured
+                self.num_black -= num_captured
+
+            # Capture tiles
+            for r, c in self.get_captured_tiles(row, col):
+                self.board[r][c] = self.current_player
+
+            self.current_player = 2 if self.current_player == 1 else 1
+        else:
+            self.current_player = 2 if self.current_player == 1 else 1
+    
     def successor(self, move) -> Othello:
         pass
     
