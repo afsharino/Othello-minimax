@@ -103,7 +103,10 @@ class Othello:
             return False
     
     def utility(self) -> int:
-        pass
+        """Defines the final numeric value to player when the game ends in terminal state"""
+        if self.num_black == self.num_white:
+            return 0
+        return 1 if self.num_black > self.num_white else -1
     
     def is_cut_off(self, depth: int, depth_limit: int) -> bool:
         pass
