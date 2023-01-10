@@ -76,7 +76,14 @@ class Othello:
             self.current_player = 2 if self.current_player == 1 else 1
     
     def successor(self, move) -> Othello:
-        pass
+        """Defines the state resulting from taking given action on given state."""
+        board = [row[:] for row in self.board]
+        new_game = Othello(board)
+        new_game.turn = self.current_player
+        new_game.num_black = self.num_black
+        new_game.num_white = self.num_white
+        new_game.make_move(move)
+        return new_game
     
     def is_terminal(self) -> bool:
         pass
