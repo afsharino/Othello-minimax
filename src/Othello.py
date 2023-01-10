@@ -1,9 +1,59 @@
 from __future__ import annotations
 
 class Othello:
-    
+    def __init__(self, board:list):
+        self.board = board
+        self.rows = len(board)
+        self.cols = len(board[0])
+        self.current_player = 1
+        self.num_black = 2
+        self.num_white = 2
+        
     def actions(self) -> list:
-        pass
+        """The set of legal moves in given state."""
+        # List of available actions 
+        list_of_actions = []
+        
+        for row in range(self.rows):
+            for col in range(self.cols):
+                if self.board[row][col] == 0:
+                    captured = self.get_captured_tiles(row, col)
+                    if captured:
+                        list_of_actions.append(((row, col), len(captured)))
+        return list_of_actions
+    
+    def get_captured_tiles(self, row: int, col: int) -> list:
+        captured = []
+        
+        for row_offset, col_offset in [(0, 1), (0, -1), (1, 0), (-1, 0),
+                                       (1, 1), (1, -1), (-1, 1), (-1, -1)]:
+            captured.extend(self.get_captured_tiles_in_direction(row, col, row_offset, col_offset))
+        
+        return captured
+    
+    def get_captured_tiles_in_direction(self, row: int, col: int, row_offset: int, col_offset: int) -> list:
+        captured = []
+        
+        row += row_offset
+        col += col_offset
+        
+        while not self.is_out_of_bound(row, col):
+            if self.board[row][col] == 0:
+                return []
+            
+            if self.board[row][col] == self.current_player:
+                return captured
+            
+            captured.append((row, col))
+            
+            row += row_offset
+            col += col_offset
+            
+        return []
+    
+    def is_out_of_bound(self, row, col):
+        # Return False if the given position is on the board, True otherwise
+        return not (0 <= row < self.rows and 0 <= col < self.cols)
     
     def successor(self, move) -> Othello:
         pass
