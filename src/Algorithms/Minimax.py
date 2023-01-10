@@ -1,3 +1,5 @@
+from Othello import Othello
+
 def minimax_search(state: Othello, depth: int) -> tuple:
     value, move = max_value(state, depth)
     return move

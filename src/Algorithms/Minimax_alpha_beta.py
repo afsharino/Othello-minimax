@@ -1,3 +1,5 @@
+from Othello import Othello
+
 def minimax_search_alpha_beta(state: Othello, depth: int) -> tuple:
         value, move = max_value_alpha_beta(state, -float('inf'), float('inf'), depth)
         return move
