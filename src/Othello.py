@@ -136,4 +136,15 @@ class Othello:
             return 0
         else:
             return -1
-        
+    
+    def __str__(self) -> str:
+        """Print board"""
+        counter = 0
+        s = "  0  1  2  3  4  5  6  7  \n"
+        for row in self.board:
+            s += f"{counter}"
+            for cell in row:
+                s += " ● " if cell == 1 else " ○ " if cell == 2 else " - "
+            s += "\n"
+            counter += 1
+        return s
