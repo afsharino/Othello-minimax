@@ -1,7 +1,8 @@
-import time
+from time import time
 from Othello import Othello
 from Algorithms.Minimax import minimax_search
 from Algorithms.Minimax_alpha_beta import minimax_search_alpha_beta
+from Algorithms.heuristic_minimax import heuristic_minimax_search
 
 class GameManager():
     def __init__(self):
@@ -16,7 +17,7 @@ class GameManager():
         [0, 0, 0, 0, 0, 0, 0, 0],
     ]
         
-    def start_game(self, search):
+    def start_game(self):
         t0 = time()
         othello = Othello(self.initial_state)
         print(othello)
